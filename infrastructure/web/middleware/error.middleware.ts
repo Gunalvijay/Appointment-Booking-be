@@ -8,6 +8,10 @@ export function errorMiddleware(
     res: Response,
     next: NextFunction
 ) {
+
+    console.error("ERROR:", err);
+    console.error(err.stack);
+    
     if(err instanceof AppointmentNotFoundError) {
         res.status(404).json({
             success: false,

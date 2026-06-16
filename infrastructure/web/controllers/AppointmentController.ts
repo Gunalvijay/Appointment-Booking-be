@@ -4,12 +4,14 @@ import { BookAppointmentPort } from "../../../application/appointment/ports/inbo
 import { CancelAppointmentPort } from "../../../application/appointment/ports/inbound/CancelAppointmentPots";
 import { BookAppointmentRequest } from "../dto/BookAppointmentRequest";
 import { CancelAppointmentParams } from "../dto/CancelAppointmentParams";
+import { GetAppointmentByIdPort } from "../../../application/appointment/ports/inbound/GetAppointmentByIdPort";
 
 export class AppointmentController {
 
     constructor(
         private readonly bookAppointmentUseCase: BookAppointmentPort,
-        private readonly cancelAppointmentUseCase: CancelAppointmentPort
+        private readonly cancelAppointmentUseCase: CancelAppointmentPort,
+        private readonly getAppointmentByIdUseCase: GetAppointmentByIdPort
     ) {}
 
     async bookAppointment(
@@ -52,6 +54,24 @@ export class AppointmentController {
                     appointmentId: req.params.id
                 });
 
+            res.status(200).json(result);
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+
+    async getAppointmentById(
+        req: Request<{id: string}>,
+        res: Response,
+        next: NextFunction
+    ): Promise<void> {
+        try {
+            const result  =
+                await this.getAppointmentByIdUseCase.execute({
+                    appointmentId: req.params.id
+                });
+            
             res.status(200).json(result);
         }
         catch (error) {

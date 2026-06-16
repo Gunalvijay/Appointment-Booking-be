@@ -17,4 +17,11 @@ router.delete(
     )
 );
 
+router.get(
+    "/:id",
+    appointmentController.getAppointmentById.bind(
+        appointmentController
+    )
+);
+
 export default router;

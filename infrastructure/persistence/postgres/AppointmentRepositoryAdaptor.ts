@@ -71,15 +71,16 @@ export class AppointmentRepositoryAdaptor implements AppointmentRepositoryPort {
 
         const slot =
             new AppointmentSlot(
-                row.start_time,
-                row.end_time
+                new Date(row.start_time),
+                new Date(row.end_time)
             );
 
         return new Appointment(
             row.id,
             row.patient_id,
             row.doctor_id,
-            slot
+            slot,
+            row.status
         );
     }
 
